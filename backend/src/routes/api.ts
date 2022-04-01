@@ -1,11 +1,7 @@
 import { Router } from 'express';
+import shoppingRouter from './shopping-router';
 
-
-// Export the base-router
 const baseRouter = Router();
+baseRouter.use('/shopping', shoppingRouter);
 
-// Setup routers
-baseRouter.use('/users', userRouter);
-
-// Export default.
 export default baseRouter;
