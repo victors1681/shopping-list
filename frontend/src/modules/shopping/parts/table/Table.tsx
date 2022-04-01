@@ -4,6 +4,8 @@ import TableMui from '@mui/material/Table';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import IconButton from '@mui/material/IconButton';
 import React from "react";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+
 import ShoppingViewModel from "../../ViewModel";
 const Wrapper = styled("div")`
     width: 100%; 
@@ -17,6 +19,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 paddingLeft: '10.5px',
 paddingRight: '10.5px'
 }));
+
+const EditIcon = styled(CreateOutlinedIcon)(({ theme }) => ({
+ color: "#555F7C",
+}));
+const DeleteIcon = styled(DeleteOutlinedIcon)(({ theme }) => ({
+  color: "#555F7C",
+ }));
+
+ 
 const StyledTableCellText = styled(TableCell)(({ theme }) => ({
   width: '100%'
 }));
@@ -88,8 +99,11 @@ export const Table: React.FC<ShoppingFormProps> = ({
               </StyledTableCellText>
               
               <StyledTableCellIcons align="right">
+              <IconButton aria-label="edit">
+        <EditIcon />
+      </IconButton>
               <IconButton aria-label="delete">
-        <CreateOutlinedIcon />
+        <DeleteIcon />
       </IconButton>
               </StyledTableCellIcons>
             </StyledTableRow>
