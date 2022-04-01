@@ -13,7 +13,7 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import IconButton from "@mui/material/IconButton";
 import React from "react";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-
+import {Confirm } from "../confirm";
 import ShoppingViewModel from "../../ViewModel";
 const Wrapper = styled("div")`
   width: 100%;
@@ -127,6 +127,7 @@ export const Table: React.FC<ShoppingFormProps> = ({
 }): JSX.Element => {
   return (
     <Wrapper>
+      <Confirm/>
       <NavTable />
       <TableMui
         sx={{

@@ -62,12 +62,19 @@ export const theme = createTheme({
       },
     },
     MuiButton: {
+        styleOverrides: {
+            root:{
+                textTransform: "none",
+                color: '#2A323C'
+            }
+        },
       variants: [
         {
           props: { color: "primary", variant: "contained" },
           style: {
             boxShadow: "none",
             textTransform: "none",
+            color: 'white'
           },
         },
       ],
