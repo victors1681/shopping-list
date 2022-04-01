@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import userRouter from './user-router';
 
 
 // Export the base-router
