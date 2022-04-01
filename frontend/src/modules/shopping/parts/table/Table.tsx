@@ -1,80 +1,100 @@
-import {  Checkbox, styled, TableBody, TableRow, Typography } from "@mui/material";
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableMui from '@mui/material/Table';
-import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
-import IconButton from '@mui/material/IconButton';
+import {
+  Checkbox,
+  styled,
+  TableBody,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableMui from "@mui/material/Table";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
+import IconButton from "@mui/material/IconButton";
 import React from "react";
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
 import ShoppingViewModel from "../../ViewModel";
 const Wrapper = styled("div")`
-    width: 100%; 
+  width: 100%;
 `;
 
 const CustomTableBody = styled(TableBody)`
-  display: grid ;
-`
+  display: grid;
+`;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-paddingLeft: '10.5px',
-paddingRight: '10.5px'
+  paddingLeft: "10.5px",
+  paddingRight: "10.5px",
 }));
 
 const EditIcon = styled(CreateOutlinedIcon)(({ theme }) => ({
- color: "#555F7C",
+  color: "#555F7C",
 }));
 const DeleteIcon = styled(DeleteOutlinedIcon)(({ theme }) => ({
   color: "#555F7C",
- }));
+}));
 
- 
 const StyledTableCellText = styled(TableCell)(({ theme }) => ({
-  width: '100%'
+  width: "100%",
 }));
 const StyledTableCellIcons = styled(TableCell)(({ theme }) => ({
-  width: '100%'
+  width: "100%",
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  background: "#FFFFFF", 
-  border: '0.5px solid #D5DFE9',
-  boxSizing: 'border-box',
-  borderRadius: '4px',
-  height: '87px',
-  marginBottom: '12px',
-  display: 'flex',
-  alignItems: 'center'
+interface StyleProps {
+  isPurchased: boolean;
+}
+
+const CheckboxCustom = styled(Checkbox)(({ checked }) => ({
+  svg: {
+    color: checked ? "#4D81B7" : "#C6C6C6",
+  },
 }));
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
+const NameText = styled(Typography)(({ isPurchased }: StyleProps) => ({
+  width: "100%",
+  textDecorationLine: isPurchased ? "line-through" : "none",
+  color: isPurchased ? "#4D81B7" : "#000000",
+}));
+const DescriptionText = styled(Typography)(({ isPurchased }: StyleProps) => ({
+  width: "100%",
+  textDecorationLine: isPurchased ? "line-through" : "none",
+}));
+
+const StyledTableRow = styled(TableRow)(({ isPurchased }: StyleProps) => ({
+  background: isPurchased ? "rgba(213, 223, 233, 0.17)" : "#FFFFFF",
+  border: isPurchased ? "none" : "0.5px solid #D5DFE9",
+  boxSizing: "border-box",
+  borderRadius: "4px",
+  height: "87px",
+  marginBottom: "12px",
+  display: "flex",
+  alignItems: "center",
+}));
+
+function createData(name: string, description: string, isPurchased: boolean) {
+  return { name, description, isPurchased };
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", true),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
+  createData("Frozen yoghurt", " Test Description", false),
 ];
-
 
 interface ShoppingFormProps {
   viewModel: ShoppingViewModel;
@@ -84,32 +104,45 @@ export const Table: React.FC<ShoppingFormProps> = ({
   viewModel,
 }): JSX.Element => {
   return (
-    <Wrapper> 
-      <TableMui sx={{ [`& .${tableCellClasses.root}`]: {
-      borderBottom: "none"
-    } }} aria-label="customized table">
-      <CustomTableBody>
+    <Wrapper>
+      <TableMui
+        sx={{
+          [`& .${tableCellClasses.root}`]: {
+            borderBottom: "none",
+          },
+        }}
+        aria-label="customized table"
+      >
+        <CustomTableBody>
           {rows.map((row) => (
-            <StyledTableRow key={row.name}>
-             <StyledTableCell align="right"> <Checkbox defaultChecked /></StyledTableCell>
+            <StyledTableRow key={row.name} isPurchased={row.isPurchased}>
+              <StyledTableCell align="right">
+                <CheckboxCustom checked={row.isPurchased} />
+              </StyledTableCell>
               <StyledTableCellText component="th" scope="row">
-                
-                <Typography variant="body2">{row.name}</Typography>
-                <Typography variant="subtitle1">{row.name}</Typography>
+                <NameText variant="body2" isPurchased={row.isPurchased}>
+                  {row.name}
+                </NameText>
+                <DescriptionText
+                  variant="subtitle1"
+                  isPurchased={row.isPurchased}
+                >
+                  {row.description}
+                </DescriptionText>
               </StyledTableCellText>
-              
+
               <StyledTableCellIcons align="right">
-              <IconButton aria-label="edit">
-        <EditIcon />
-      </IconButton>
-              <IconButton aria-label="delete">
-        <DeleteIcon />
-      </IconButton>
+                <IconButton aria-label="edit">
+                  <EditIcon />
+                </IconButton>
+                <IconButton aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
               </StyledTableCellIcons>
             </StyledTableRow>
           ))}
         </CustomTableBody>
-      </TableMui> 
+      </TableMui>
     </Wrapper>
   );
 };

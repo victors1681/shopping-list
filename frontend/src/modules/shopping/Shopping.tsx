@@ -11,7 +11,7 @@ export const ShoppingView = ({ viewModel }: ShoppingViewProps) => {
   return (
     <div>
       {/* <Empty viewModel={viewModel} /> */}
-      <Table viewModel={viewModel}/>
+      <Table viewModel={viewModel} />
     </div>
   );
 };
