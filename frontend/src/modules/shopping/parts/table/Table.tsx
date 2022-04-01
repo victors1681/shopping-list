@@ -1,5 +1,7 @@
 import {
+  Button,
   Checkbox,
+  Stack,
   styled,
   TableBody,
   TableRow,
@@ -100,11 +102,32 @@ interface ShoppingFormProps {
   viewModel: ShoppingViewModel;
 }
 
+interface NavTableProps {
+  handleAddItem?: () => {};
+}
+const NavTable: React.FC<NavTableProps> = ({ handleAddItem }) => {
+  return (
+    <Stack
+      sx={{ paddingBottom: "11px", paddingTop: "47px" }}
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+      spacing={2}
+    >
+      <Typography variant="h5">Your Items</Typography>
+      <Button variant="contained" onClick={handleAddItem}>
+        Add Item
+      </Button>
+    </Stack>
+  );
+};
+
 export const Table: React.FC<ShoppingFormProps> = ({
   viewModel,
 }): JSX.Element => {
   return (
     <Wrapper>
+      <NavTable />
       <TableMui
         sx={{
           [`& .${tableCellClasses.root}`]: {

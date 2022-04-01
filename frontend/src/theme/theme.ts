@@ -21,6 +21,17 @@ export const theme = createTheme({
       letterSpacing: "-1.3038520263464193e-9px",
     },
 
+    h5: {
+      fontFamily: "Nunito",
+      fontStyle: "normal",
+      fontWeight: 600,
+      fontSize: "18px",
+      lineHeight: "24px",
+      textAlign: "center",
+      letterSpacing: "-1.30385e-09px",
+      color: " #000000",
+    },
+
     subtitle1: {
       fontFamily: "Nunito",
       fontSize: "14px",
