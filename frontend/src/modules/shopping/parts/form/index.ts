@@ -1,1 +1,1 @@
-export * from "./ShoppingForm"
+export * from "./ShoppingForm";

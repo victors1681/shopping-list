@@ -1,12 +1,12 @@
-import AppBar from '@mui/material/AppBar';
-import { styled } from '@mui/material/styles';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import React from 'react';
+import AppBar from "@mui/material/AppBar";
+import { styled } from "@mui/material/styles";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import React from "react";
 
 const AppBarToolBar = styled(Toolbar)`
   height: 64px;
-  background-color: #4D81B7;
+  background-color: #4d81b7;
 `;
 
 const LogoTitle = styled(Typography)`
@@ -21,7 +21,7 @@ const LogoTitle = styled(Typography)`
 export const Header = (): JSX.Element => {
   return (
     <AppBar position="static" elevation={0}>
-      <AppBarToolBar sx={{ flexWrap: 'wrap' }}>
+      <AppBarToolBar sx={{ flexWrap: "wrap" }}>
         <LogoTitle
           variant="subtitle1"
           color="inherit"

@@ -1,15 +1,13 @@
 import ShoppingViewModel from "../ViewModel";
 import Model from "../Model";
 
-describe("Testing View Model", () =>{
+describe("Testing View Model", () => {
+  it("Get shipping list", () => {
+    const model = new Model();
+    const viewModel = new ShoppingViewModel(model);
 
-    it("Get shipping list", () =>{
+    const list = viewModel.list;
 
-        const model = new Model();
-        const viewModel = new ShoppingViewModel(model);
-
-        const list = viewModel.list;
-        
-        expect(list.length).toBe(3)
-    })
-})
+    expect(list.length).toBe(3);
+  });
+});
