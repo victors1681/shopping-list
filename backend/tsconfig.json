@@ -72,9 +72,6 @@
       "@models/*": [
         "src/models/*"
       ],
-      "@shared/*": [
-        "src/shared/*"
-      ],
       "@server": [
         "src/server"
       ],
