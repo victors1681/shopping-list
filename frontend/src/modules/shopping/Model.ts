@@ -1,8 +1,9 @@
 import { AxiosError } from "axios";
 import { action, makeObservable, observable, runInAction } from "mobx";
-import { getShoppingListApi, isErrorResponse } from "../../networking/endpoints";
+import { AddShoppingApi, getShoppingListApi, isErrorResponse } from "../../networking/endpoints";
 import { NetworkStatus } from "../../networking/rest-client";
 import { ShoppingResponse } from "../../networking/types";
+import { Shopping } from "./types";
 
 export class Model {
   shoppingStatus: NetworkStatus = NetworkStatus.INITIAL;
@@ -23,6 +24,23 @@ export class Model {
     if (!isErrorResponse(response)) {
       runInAction(() => {
         this.shopping = response;
+        this.shoppingStatus = NetworkStatus.SUCCESS;
+      });
+    } else {
+      runInAction(() => {
+        this.shoppingStatus = NetworkStatus.ERROR;
+        this.error = response;
+      });
+    }
+  };
+
+  newItem = async (params: Shopping): Promise<void> => {
+    this.shoppingStatus = NetworkStatus.LOADING;
+    const response = await AddShoppingApi(params); 
+    if (!isErrorResponse(response)) {
+      runInAction(() => {
+        //add the new element to the shopping array
+       this.shopping?.data.shopping.push(response?.data.shopping);
         this.shoppingStatus = NetworkStatus.SUCCESS;
       });
     } else {

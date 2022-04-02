@@ -56,8 +56,8 @@ router.post(p.add, async (req: Request, res: Response) => {
         throw new ParamMissingError();
     }
     // Fetch data
-    await shoppingService.addOne(shopping as Shopping);
-    return res.status(CREATED).end();
+    const result  = await shoppingService.addOne(shopping as Shopping); 
+    return res.status(CREATED).json({shopping: result});
 });
 
 

@@ -18,6 +18,8 @@ import {
 import { InputText, TextArea } from "./inputs";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import ShoppingViewModel from "../../ViewModel";
+import { observer } from "mobx-react";
 
 const searchSchema = Yup.object().shape({
   name: Yup.string().required(),
@@ -76,41 +78,33 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
   );
 };
 
-export const ShoppingForm = () => {
-  const [open, setOpen] = React.useState(true);
+interface ShoppingFormProps {
+  viewModel: ShoppingViewModel;
+}
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+export const ShoppingForm =  observer(({ viewModel} : ShoppingFormProps) => {
+  const { isNewEditOpen, handleOpenNewEdit, initialFormValues, handleFormSubmission } = viewModel;
+    
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
-      </Button>
       <Formik
         initialValues={{
-          name: " test",
-          description: "test222",
-          qty: 2,
+          ...initialFormValues
         }}
         validationSchema={searchSchema}
-        onSubmit={() => {}}
+        onSubmit={(values)=> handleFormSubmission(values as any)}
         enableReinitialize
       >
         {({ isSubmitting, handleSubmit, isValid }) => {
           return (
             <BootstrapDialog
-              onClose={handleClose}
+              onClose={() => handleOpenNewEdit(true)}
               aria-labelledby="customized-dialog-title"
-              open={open}
+              open={isNewEditOpen}
             >
               <BootstrapDialogTitle
                 id="customized-dialog-title"
-                onClose={handleClose}
+                onClose={() => handleOpenNewEdit(true)}
               >
                 SHOPPING LIST
               </BootstrapDialogTitle>
@@ -148,7 +142,7 @@ export const ShoppingForm = () => {
                 }}
               >
                 <Button
-                  onClick={handleClose}
+                  onClick={() => handleOpenNewEdit(true)}
                   disabled={isSubmitting || !isValid}
                 >
                   Cancel
@@ -168,5 +162,5 @@ export const ShoppingForm = () => {
       </Formik>
     </div>
   );
-};
+});
 export default ShoppingForm;

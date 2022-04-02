@@ -1,4 +1,5 @@
 import { Button, Stack, styled, Typography } from "@mui/material";
+import { observer } from "mobx-react";
 import React from "react";
 import ShoppingViewModel from "../../ViewModel";
 
@@ -19,9 +20,10 @@ interface ShoppingFormProps {
   viewModel: ShoppingViewModel;
 }
 
-export const Empty: React.FC<ShoppingFormProps> = ({
+export const Empty: React.FC<ShoppingFormProps> =  observer(({
   viewModel,
 }): JSX.Element => {
+  const { handleOpenNewEdit} = viewModel;
   return (
     <Wrapper>
       <Stack
@@ -31,10 +33,10 @@ export const Empty: React.FC<ShoppingFormProps> = ({
         spacing={2}
       >
         <Typography variant="body1">Your shopping list is empty :(</Typography>
-        <Button variant="contained">Add your first item</Button>
+        <Button variant="contained" onClick={() => handleOpenNewEdit()}>Add your first item</Button>
       </Stack>
     </Wrapper>
   );
-};
+});
 
 export default Empty;

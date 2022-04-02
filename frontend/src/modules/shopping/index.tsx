@@ -4,9 +4,14 @@ import ShoppingViewModel from "./ViewModel";
 import Model from "./Model";
 
 export const Shopping = () => {
-  const model = new Model();
-  const viewModel = new ShoppingViewModel(model);
+ 
+  const model = React.useMemo(() => new Model(), []);
 
+  const viewModel = React.useMemo(
+    () => new ShoppingViewModel(model),
+    [model]
+  );
+ 
   React.useEffect(()=>{
     model.getAllShopping()
   },[])

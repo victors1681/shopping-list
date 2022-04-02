@@ -74,37 +74,13 @@ const StyledTableRow = styled(TableRow)(({ isPurchased }: StyleProps) => ({
   alignItems: "center",
 }));
 
-function createData(name: string, description: string, isPurchased: boolean) {
-  return { name, description, isPurchased };
-}
-
-const rows = [
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", true),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-  createData("Frozen yoghurt", " Test Description", false),
-];
 
 interface ShoppingFormProps {
   viewModel: ShoppingViewModel;
 }
 
 interface NavTableProps {
-  handleAddItem?: () => {};
+  handleAddItem: (close?:boolean, shoppingId?: number) =>void;
 }
 const NavTable: React.FC<NavTableProps> = ({ handleAddItem }) => {
   return (
@@ -116,7 +92,7 @@ const NavTable: React.FC<NavTableProps> = ({ handleAddItem }) => {
       spacing={2}
     >
       <Typography variant="h5">Your Items</Typography>
-      <Button variant="contained" onClick={handleAddItem}>
+      <Button variant="contained" onClick={ () => handleAddItem(false)}>
         Add Item
       </Button>
     </Stack>
@@ -126,11 +102,11 @@ const NavTable: React.FC<NavTableProps> = ({ handleAddItem }) => {
 export const Table: React.FC<ShoppingFormProps> = observer( ({
   viewModel,
 }): JSX.Element => {
-  const { list } = viewModel;
+  const { list, handleOpenNewEdit } = viewModel;
   return (
     <Wrapper>
       <Confirm />
-      <NavTable />
+      <NavTable handleAddItem={handleOpenNewEdit} />
       <TableMui
         sx={{
           [`& .${tableCellClasses.root}`]: {
@@ -158,7 +134,7 @@ export const Table: React.FC<ShoppingFormProps> = observer( ({
               </StyledTableCellText>
 
               <StyledTableCellIcons align="right">
-                <IconButton aria-label="edit">
+                <IconButton aria-label="edit" onClick={()=> handleOpenNewEdit(false, row.id)}>
                   <EditIcon />
                 </IconButton>
                 <IconButton aria-label="delete">

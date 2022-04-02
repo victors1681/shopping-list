@@ -4,18 +4,20 @@ import { Table } from "./parts/table";
 import { ShoppingForm } from "./parts/form";
 
 import ShoppingViewModel from "./ViewModel";
+import { observer } from "mobx-react";
 
 interface ShoppingViewProps {
   viewModel: ShoppingViewModel;
 }
-export const ShoppingView = ({ viewModel }: ShoppingViewProps) => {
+export const ShoppingView =  observer(({ viewModel }: ShoppingViewProps) => {
+
+  const { list } = viewModel;
   return (
     <div>
-      <ShoppingForm />
-      {/* <Empty viewModel={viewModel} /> */}
-      <Table viewModel={viewModel} />
+      <ShoppingForm viewModel={viewModel} />
+      {list.length ? <Table viewModel={viewModel} /> : <Empty viewModel={viewModel} /> }
     </div>
   );
-};
+});
 
 export default ShoppingView;
