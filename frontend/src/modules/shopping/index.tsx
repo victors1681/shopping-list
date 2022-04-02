@@ -7,5 +7,8 @@ export const Shopping = () => {
   const model = new Model();
   const viewModel = new ShoppingViewModel(model);
 
+  React.useEffect(()=>{
+    model.getAllShopping()
+  },[])
   return <View viewModel={viewModel} />;
 };

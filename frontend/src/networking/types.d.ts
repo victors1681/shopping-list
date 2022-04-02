@@ -1,3 +1,5 @@
 export interface ShoppingResponse {
-  data: Shopping[];
+  data: {
+    shopping: Shopping[];
+  }
 }

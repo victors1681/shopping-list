@@ -9,7 +9,7 @@ export class ShoppingViewModel {
   }
 
   get list(): Shopping[] {
-    return [];
+    return this._model?.shopping?.data.shopping || []
   }
 
   get getSingleRecord(): Shopping {

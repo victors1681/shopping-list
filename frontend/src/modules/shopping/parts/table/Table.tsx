@@ -15,6 +15,7 @@ import React from "react";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { Confirm } from "../confirm";
 import ShoppingViewModel from "../../ViewModel";
+import { observer } from "mobx-react";
 const Wrapper = styled("div")`
   width: 100%;
 `;
@@ -122,9 +123,10 @@ const NavTable: React.FC<NavTableProps> = ({ handleAddItem }) => {
   );
 };
 
-export const Table: React.FC<ShoppingFormProps> = ({
+export const Table: React.FC<ShoppingFormProps> = observer( ({
   viewModel,
 }): JSX.Element => {
+  const { list } = viewModel;
   return (
     <Wrapper>
       <Confirm />
@@ -138,18 +140,18 @@ export const Table: React.FC<ShoppingFormProps> = ({
         aria-label="customized table"
       >
         <CustomTableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name} isPurchased={row.isPurchased}>
+          {list.map((row) => (
+            <StyledTableRow key={row.id} isPurchased={row.purchased}>
               <StyledTableCell align="right">
-                <CheckboxCustom checked={row.isPurchased} />
+                <CheckboxCustom checked={row.purchased} />
               </StyledTableCell>
               <StyledTableCellText component="th" scope="row">
-                <NameText variant="body2" isPurchased={row.isPurchased}>
+                <NameText variant="body2" isPurchased={row.purchased}>
                   {row.name}
                 </NameText>
                 <DescriptionText
                   variant="subtitle1"
-                  isPurchased={row.isPurchased}
+                  isPurchased={row.purchased}
                 >
                   {row.description}
                 </DescriptionText>
@@ -169,6 +171,6 @@ export const Table: React.FC<ShoppingFormProps> = ({
       </TableMui>
     </Wrapper>
   );
-};
+});
 
 export default Table;
