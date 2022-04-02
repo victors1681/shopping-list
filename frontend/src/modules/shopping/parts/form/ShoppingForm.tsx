@@ -14,10 +14,16 @@ import {
   FormControlLabel,
   FormGroup,
   Grid,
-  Input,
 } from "@mui/material";
 import { InputText, TextArea } from "./inputs";
 import { Formik } from "formik";
+import * as Yup from "yup";
+
+const searchSchema = Yup.object().shape({
+  name: Yup.string().required(),
+  description: Yup.string().required().max(100),
+  qty: Yup.number().required(),
+});
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -85,29 +91,30 @@ export const ShoppingForm = () => {
       <Button variant="outlined" onClick={handleClickOpen}>
         Open dialog
       </Button>
-      <BootstrapDialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
+      <Formik
+        initialValues={{
+          name: " test",
+          description: "test222",
+          qty: 2,
+        }}
+        validationSchema={searchSchema}
+        onSubmit={() => {}}
+        enableReinitialize
       >
-        <BootstrapDialogTitle
-          id="customized-dialog-title"
-          onClose={handleClose}
-        >
-          SHOPPING LIST
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <Formik
-            initialValues={{
-              name: " test",
-              description: "test222",
-              qty: 2,
-            }}
-            onSubmit={() => {}}
-            enableReinitialize
-          >
-            {({ isSubmitting, handleSubmit, resetForm, isValid }) => {
-              return (
+        {({ isSubmitting, handleSubmit, isValid }) => {
+          return (
+            <BootstrapDialog
+              onClose={handleClose}
+              aria-labelledby="customized-dialog-title"
+              open={open}
+            >
+              <BootstrapDialogTitle
+                id="customized-dialog-title"
+                onClose={handleClose}
+              >
+                SHOPPING LIST
+              </BootstrapDialogTitle>
+              <DialogContent dividers>
                 <Box sx={{ flexGrow: 1 }}>
                   <Box sx={{ paddingTop: "28px", paddingBottom: "13px" }}>
                     <Typography variant="body2"> Edit an Item </Typography>
@@ -133,22 +140,32 @@ export const ShoppingForm = () => {
                     </Grid>
                   </Grid>
                 </Box>
-              );
-            }}
-          </Formik>
-        </DialogContent>
-        <DialogActions
-          sx={{
-            borderBottom: "5px solid #4D81B7",
-            paddingBottom: "21px",
-          }}
-        >
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="contained" autoFocus onClick={handleClose}>
-            Save Item
-          </Button>
-        </DialogActions>
-      </BootstrapDialog>
+              </DialogContent>
+              <DialogActions
+                sx={{
+                  borderBottom: "5px solid #4D81B7",
+                  paddingBottom: "21px",
+                }}
+              >
+                <Button
+                  onClick={handleClose}
+                  disabled={isSubmitting || !isValid}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="contained"
+                  autoFocus
+                  onClick={() => {handleSubmit()}}
+                  disabled={isSubmitting || !isValid}
+                >
+                  Save Item
+                </Button>
+              </DialogActions>
+            </BootstrapDialog>
+          );
+        }}
+      </Formik>
     </div>
   );
 };
