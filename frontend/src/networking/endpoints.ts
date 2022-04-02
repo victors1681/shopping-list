@@ -11,7 +11,8 @@ import { Shopping } from '../modules/shopping/types';
 //Guard Type
 
 export function isErrorResponse<T>(data: any): data is AxiosError<T> {
-  return data?.status === 500 || data?.status === 400;
+  const result = data?.status === 500 || data?.status === 400 || data?.status === 404 || data.status === undefined;
+  return result
 }
 
 /**
@@ -46,12 +47,12 @@ export const AddShoppingApi = async (
 };
 
 export const updateShoppingApi = async (
-  params: Shopping
+  shopping: Shopping
 ): Promise<ShoppingResponse | undefined | AxiosError> => {
   try {
     const response = await client.put<Shopping, ShoppingResponse>(
       '/shopping/update',
-      { params }
+      { shopping }
     );
     return response;
   } catch (err) {
@@ -65,8 +66,7 @@ export const deleteShoppingApi = async (
 ): Promise<void | undefined | AxiosError> => {
   try {
     const response = await client.delete<number, void>(
-      '/shopping/delete',
-      { params: { id } }
+      `/shopping/delete/${id}`,
     );
     return response;
   } catch (err) {

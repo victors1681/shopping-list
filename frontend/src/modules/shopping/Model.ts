@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { action, makeObservable, observable, runInAction } from "mobx";
-import { AddShoppingApi, getShoppingListApi, isErrorResponse } from "../../networking/endpoints";
+import { AddShoppingApi, deleteShoppingApi, getShoppingListApi, isErrorResponse, updateShoppingApi } from "../../networking/endpoints";
 import { NetworkStatus } from "../../networking/rest-client";
 import { ShoppingResponse } from "../../networking/types";
 import { Shopping } from "./types";
@@ -51,10 +51,50 @@ export class Model {
     }
   };
 
-  updateShopping = async (): Promise<void> => {};
+  updateItem = async (params: Shopping): Promise<void> => {
+    this.shoppingStatus = NetworkStatus.LOADING;
+    const response = await updateShoppingApi(params); 
+    if (!isErrorResponse(response)) {
+      runInAction(() => {
+        
+        const index = this.shopping?.data.shopping.findIndex(f => f.id === params.id);
+        if(index && index > -1){
+          //replace the item with the new item updated.
+            this.shopping?.data.shopping.splice(index, 1, response?.data.shopping[0]);
+        }
+       this.shopping?.data.shopping.push(response?.data.shopping);
+        this.shoppingStatus = NetworkStatus.SUCCESS;
+      });
+    } else {
+      runInAction(() => {
+        this.shoppingStatus = NetworkStatus.ERROR;
+        this.error = response;
+      });
+    }
+  };
 
   //delete
-  deleteShopping = async (): Promise<void> => {};
+  deleteItem = async (id: number): Promise<void> => {
+    this.shoppingStatus = NetworkStatus.LOADING;
+    const response = await deleteShoppingApi(id); 
+    if (!isErrorResponse(response)) {
+      runInAction(() => {
+        //remove item from the array to avoid another fetch
+        const newList = this.shopping?.data.shopping.filter(f => f.id !== id) || [];
+       this.shopping = {
+         data: {
+           shopping: newList
+         }
+       }
+        this.shoppingStatus = NetworkStatus.SUCCESS;
+      });
+    } else {
+      runInAction(() => {
+        this.shoppingStatus = NetworkStatus.ERROR;
+        this.error = response;
+      });
+    }
+  };
 }
 
 export default Model;

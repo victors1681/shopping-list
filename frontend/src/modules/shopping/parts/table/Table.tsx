@@ -102,10 +102,10 @@ const NavTable: React.FC<NavTableProps> = ({ handleAddItem }) => {
 export const Table: React.FC<ShoppingFormProps> = observer( ({
   viewModel,
 }): JSX.Element => {
-  const { list, handleOpenNewEdit } = viewModel;
+  const { list, handleOpenNewEdit, confirmDelete, checkSingleRow } = viewModel;
   return (
     <Wrapper>
-      <Confirm />
+      <Confirm viewModel={viewModel} />
       <NavTable handleAddItem={handleOpenNewEdit} />
       <TableMui
         sx={{
@@ -119,7 +119,7 @@ export const Table: React.FC<ShoppingFormProps> = observer( ({
           {list.map((row) => (
             <StyledTableRow key={row.id} isPurchased={row.purchased}>
               <StyledTableCell align="right">
-                <CheckboxCustom checked={row.purchased} />
+                <CheckboxCustom checked={row.purchased} onChange={() => {checkSingleRow(row.id, !row.purchased)}} />
               </StyledTableCell>
               <StyledTableCellText component="th" scope="row">
                 <NameText variant="body2" isPurchased={row.purchased}>
@@ -137,7 +137,7 @@ export const Table: React.FC<ShoppingFormProps> = observer( ({
                 <IconButton aria-label="edit" onClick={()=> handleOpenNewEdit(false, row.id)}>
                   <EditIcon />
                 </IconButton>
-                <IconButton aria-label="delete">
+                <IconButton aria-label="delete" onClick={ () => confirmDelete(row.id)}>
                   <DeleteIcon />
                 </IconButton>
               </StyledTableCellIcons>

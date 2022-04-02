@@ -5,23 +5,22 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import ShoppingViewModel from "../../ViewModel";
+import { observer } from "mobx-react";
 
-export const Confirm = () => {
-  const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+interface ConfirmProps {
+  viewModel: ShoppingViewModel
+}
+export const Confirm = observer(({ viewModel }: ConfirmProps) => {
+  
+  const { isConfirmOpen, closeDeleteConfirmation, deleteItem } = viewModel;
+  
   return (
     <div>
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={isConfirmOpen}
+        onClose={closeDeleteConfirmation}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -36,13 +35,13 @@ export const Confirm = () => {
             padding: "30px",
           }}
         >
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} autoFocus variant="contained">
+          <Button onClick={closeDeleteConfirmation}>Cancel</Button>
+          <Button onClick={deleteItem} autoFocus variant="contained">
             Delete
           </Button>
         </DialogActions>
       </Dialog>
     </div>
   );
-};
+});
 export default Confirm;
