@@ -11,7 +11,7 @@ interface ShoppingViewProps {
 export const ShoppingView = ({ viewModel }: ShoppingViewProps) => {
   return (
     <div>
-        <ShoppingForm/>
+      <ShoppingForm />
       {/* <Empty viewModel={viewModel} /> */}
       <Table viewModel={viewModel} />
     </div>
