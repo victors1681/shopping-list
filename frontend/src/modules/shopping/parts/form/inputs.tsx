@@ -48,6 +48,7 @@ export interface Props {
   handleChange?: (value: any) => void;
   options?: SelectOption[];
   disabled?: boolean;
+  placeholder?: string
 }
 
 export const InputText = ({
@@ -55,6 +56,7 @@ export const InputText = ({
   error,
   type,
   disabled,
+  placeholder
 }: Props): JSX.Element => {
   const [field, meta] = useField({ name });
   const { isSubmitting } = useFormikContext();
@@ -70,6 +72,7 @@ export const InputText = ({
         id={`${name}-input`}
         onChange={field.onChange}
         value={field.value}
+        placeholder={placeholder}
       />
     </React.Fragment>
   );
@@ -83,7 +86,7 @@ export const TextArea = ({ name, error, disabled }: Props): JSX.Element => {
     <React.Fragment>
       <TextAreaCustom
         minRows={3}
-        placeholder="Minimum 3 rows"
+        placeholder="Get them from Walmart"
         style={{ width: "100%", height: "140px" }}
         name={name}
         disabled={disabled || isSubmitting}

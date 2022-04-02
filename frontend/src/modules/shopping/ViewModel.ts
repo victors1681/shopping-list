@@ -30,6 +30,10 @@ export class ShoppingViewModel {
       } 
   }
 
+  get isNew():boolean{
+    return !!this._shoppingId
+  }
+
   get list(): Shopping[] {
     return this._model?.shopping?.data?.shopping?.slice().sort(this.sortObj) || []
   }

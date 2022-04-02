@@ -83,7 +83,7 @@ interface ShoppingFormProps {
 }
 
 export const ShoppingForm =  observer(({ viewModel} : ShoppingFormProps) => {
-  const { isNewEditOpen, handleOpenNewEdit, initialFormValues, handleFormSubmission } = viewModel;
+  const { isNewEditOpen, handleOpenNewEdit, initialFormValues, handleFormSubmission, isNew } = viewModel;
     
   return (
     <div>
@@ -111,12 +111,12 @@ export const ShoppingForm =  observer(({ viewModel} : ShoppingFormProps) => {
               <DialogContent dividers>
                 <Box sx={{ flexGrow: 1 }}>
                   <Box sx={{ paddingTop: "28px", paddingBottom: "13px" }}>
-                    <Typography variant="body2"> Edit an Item </Typography>
-                    <Typography> Edit your item below </Typography>
+                    <Typography variant="body2"> {isNew ? "New Item" : "Edit an Item"} </Typography>
+                    <Typography> {isNew ? "Create new item" : " Edit your item below"} </Typography>
                   </Box>
                   <Grid container spacing={2} columns={16}>
                     <Grid item xs={16}>
-                      <InputText name="name" label="" />
+                      <InputText name="name" label=""  placeholder={"Buy tomatoes"} />
                     </Grid>
                     <Grid item xs={16}>
                       <TextArea name="description" label="" />
