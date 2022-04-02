@@ -58,11 +58,10 @@ export class Model {
       runInAction(() => {
         
         const index = this.shopping?.data.shopping.findIndex(f => f.id === params.id);
-        if(index && index > -1){
+        if(index && index > -1){ 
           //replace the item with the new item updated.
             this.shopping?.data.shopping.splice(index, 1, response?.data.shopping[0]);
-        }
-       this.shopping?.data.shopping.push(response?.data.shopping);
+        } 
         this.shoppingStatus = NetworkStatus.SUCCESS;
       });
     } else {

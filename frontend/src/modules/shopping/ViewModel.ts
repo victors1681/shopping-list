@@ -1,4 +1,5 @@
 import { action, makeObservable, observable } from "mobx";
+import { NetworkStatus } from "../../networking/rest-client";
 import ShoppingModel from "./Model";
 import { Shopping } from "./types.d";
 
@@ -32,6 +33,10 @@ export class ShoppingViewModel {
 
   get isNew():boolean{
     return !!this._shoppingId
+  }
+
+  get isLoading(): boolean {
+    return this._model?.shoppingStatus === NetworkStatus.LOADING;
   }
 
   get list(): Shopping[] {
