@@ -22,7 +22,7 @@ export function isErrorResponse<T>(data: any): data is AxiosError<T> {
 export const getShoppingListApi = async (): Promise<ShoppingResponse | undefined | AxiosError> => {
   try {
     const response = await client.get<any, ShoppingResponse>(
-      '/shopping/all'
+      '/api/shopping/all'
     );
     return response;
   } catch (err) {
@@ -36,7 +36,7 @@ export const AddShoppingApi = async (
 ): Promise<ShoppingResponseSingle | undefined | AxiosError> => {
   try {
     const response = await client.post<Shopping, ShoppingResponseSingle>(
-      '/shopping/add',
+      '/api/shopping/add',
       { shopping }
     );
     return response;
@@ -51,7 +51,7 @@ export const updateShoppingApi = async (
 ): Promise<ShoppingResponse | undefined | AxiosError> => {
   try {
     const response = await client.put<Shopping, ShoppingResponse>(
-      '/shopping/update',
+      '/api/shopping/update',
       { shopping }
     );
     return response;
@@ -66,7 +66,7 @@ export const deleteShoppingApi = async (
 ): Promise<void | undefined | AxiosError> => {
   try {
     const response = await client.delete<number, void>(
-      `/shopping/delete/${id}`,
+      `/api/shopping/delete/${id}`,
     );
     return response;
   } catch (err) {
