@@ -1,0 +1,72 @@
+version: '3'
+
+services: 
+  nginx:
+    image: nginx:1.17.10
+    container_name: nginx
+    depends_on:
+        - node_backend
+        - node_frontend
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 8080:8080
+
+  node_backend: 
+    container_name: node_backend
+    image: node:14.6.0-alpine
+    command: >
+      sh -c "npm run migrate && 
+             npm run test &&
+             npm run start"
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    ports:
+      - '8081:8081'
+    tty: true
+    stdin_open: true
+    volumes:
+    - .:/app
+    environment:
+    - DB_USER=postgres
+    - DB_PASSWORD=password
+    - DB_SCHEMA=postgres
+    - DB_PORT=5432
+    - PGHOST=db
+    depends_on:
+      - db   
+  node_frontend: 
+    container_name: node_frontend
+    image: node:14.5.0-alpine
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    tty: true
+    stdin_open: true
+    volumes:
+    - .:/ui
+    environment:
+    - DB_USER=postgres
+    - DANGEROUSLY_DISABLE_HOST_CHECK=true
+    depends_on:
+      - db
+      - node_backend
+  db:
+    container_name: db
+    image: 'postgres:14.1-alpine'
+    stdin_open: true
+    tty: true
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    #volumes:
+    #  - pgdata1:/var/lib/postgresql/data
+
+volumes:
+  pgdata1: {}
