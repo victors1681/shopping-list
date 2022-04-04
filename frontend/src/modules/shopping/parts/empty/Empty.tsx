@@ -6,14 +6,17 @@ import ShoppingViewModel from "../../ViewModel";
 const Wrapper = styled("div")`
   height: 290px;
   width: 614px;
-  position: absolute;
-  left: 333px;
-  top: 174px;
   display: flex;
   justify-content: center;
   border: 1px solid #c6c6c6;
   box-sizing: border-box;
   border-radius: 5px;
+`;
+const Container = styled("div")`
+  padding-top: 110px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 interface ShoppingFormProps {
@@ -25,6 +28,7 @@ export const Empty: React.FC<ShoppingFormProps> =  observer(({
 }): JSX.Element => {
   const { handleOpenNewEdit} = viewModel;
   return (
+    <Container>
     <Wrapper>
       <Stack
         direction="column"
@@ -36,6 +40,7 @@ export const Empty: React.FC<ShoppingFormProps> =  observer(({
         <Button variant="contained" onClick={() => handleOpenNewEdit()}>Add your first item</Button>
       </Stack>
     </Wrapper>
+    </Container>
   );
 });
 
