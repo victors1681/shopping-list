@@ -58,7 +58,7 @@ export class Model {
       runInAction(() => {
         
         const index = this.shopping?.data.shopping.findIndex(f => f.id === params.id);
-        if(index && index > -1){ 
+        if(index !== undefined && index > -1){ 
           //replace the item with the new item updated.
             this.shopping?.data.shopping.splice(index, 1, response?.data.shopping[0]);
         } 
