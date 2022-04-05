@@ -95,7 +95,7 @@ export const ShoppingForm =  observer(({ viewModel} : ShoppingFormProps) => {
         onSubmit={(values)=> handleFormSubmission(values as any)}
         enableReinitialize
       >
-        {({ isSubmitting, handleSubmit, isValid, values, handleChange }) => {
+        {({ isSubmitting, handleSubmit, isValid, values, setFieldValue }) => {
           return (
             <BootstrapDialog
               onClose={() => handleOpenNewEdit(true)}
@@ -122,14 +122,14 @@ export const ShoppingForm =  observer(({ viewModel} : ShoppingFormProps) => {
                       <TextArea name="description" label="" />
                     </Grid>
                     <Grid item xs={16}>
-                      <InputText name="qty" label="" />
+                      <InputText name="qty" label="" placeholder="Quantity" />
                     </Grid>
                     <Grid item xs={16}>
                       <FormGroup>
                         <FormControlLabel
                           control={<Checkbox name="purchased" checked={values.purchased}/>}
                           label="Purchased"
-                          onChange={handleChange}
+                          onChange={() => setFieldValue("purchased", !values.purchased)}
                         />
                       </FormGroup>
                     </Grid>
